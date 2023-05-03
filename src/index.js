@@ -1,13 +1,34 @@
+//@ts-nocheck
 import React from 'react';
+import { Route, Routes, BrowserRouter as Router, NavLink } from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import NavBar from './components/NavBar.tsx'
+import ResponsiveAppBar from './components/ResponsiveNavBar.tsx';
+import Home from "./screens/Home.tsx";
+import About from "./screens/About.tsx";
+import TermsAndConditions from "./screens/TermsAndConditions.tsx";
+import UsersScreen from './screens/UsersScreen.tsx';
+import UserScreen from './screens/UserScreen.tsx'
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Router>
+    <ResponsiveAppBar/>
+    <Routes>
+      <Route path='/' element={<Home/>} />
+      <Route path='/users' element={<UsersScreen/>} />
+      <Route path='/users/:id' element={<UserScreen/>} />
+      <Route path= '/about/:id' element={<About/>} />
+      <Route path= '/termsandconditions' element={<TermsAndConditions/>} />
+    </Routes>
+    </Router>
+  {/*   <NavBar/> */}
+   
   </React.StrictMode>
 );
 
