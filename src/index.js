@@ -12,6 +12,7 @@ import About from "./screens/About.tsx";
 import TermsAndConditions from "./screens/TermsAndConditions.tsx";
 import UsersScreen from './screens/UsersScreen.tsx';
 import UserScreen from './screens/UserScreen.tsx'
+import NewUser from './screens/NewUser.tsx';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,6 +23,7 @@ root.render(
     <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/users' element={<UsersScreen/>} />
+      <Route path='/newUser' element={<NewUser/>} />
       <Route path='/users/:id' element={<UserScreen/>} />
       <Route path= '/about/:id' element={<About/>} />
       <Route path= '/termsandconditions' element={<TermsAndConditions/>} />

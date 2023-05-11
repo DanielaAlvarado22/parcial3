@@ -1,15 +1,34 @@
 //@ts-nocheck
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Button from "@mui/material/Button";
 import { useParams,NavLink } from "react-router-dom";
 import { users, User } from "../resources/Users.ts";
-import { useRadioGroup } from "@mui/material";
+import { getUser, UserData, updateUsers} from "../resources/Users.ts";
 import useForm from "../hooks/useForm.ts";
+
+const AllUsers = async (setData,setUser, id) => {
+  const UserData = await getUser(id)
+  setUser(UserData);
+  setData(UserData);
+
+
+}
+
+const InfoUser: UserData = {
+  name: '',
+  address: '',
+  salary: '',
+  role: '' 
+}
+
 function UserScreen() {
   const { id } = useParams();
-  const user = users.find((user) => user.id.toString() === id);
+  const [user, setUser] = useState<UserData>(InfoUser)
+  useEffect(() => {
+    AllUsers(setData,setUser, id)
+  }, [])
 
-  const [ data, handleChange ] = useForm<User>(user);
+  const [ data, handleChange, setData ] = useForm<User>(user);
   const { name, role, address, salary } = data
 
   if (!user) {
@@ -20,18 +39,25 @@ function UserScreen() {
     );
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+  const handleUpdate = () => {
+    updateUsers(id, data);
+  }
+
   //const { name, role, address, salary } = user;
   
   return (
     <div className="container">
       <h1>Hi user here you can modify your information</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name</label>
           <input
             name="name"
             type="text"
-            className="form-control"
+            className="form-control w-25"
             id=""
             placeholder="Enter name"
             value={name}
@@ -43,7 +69,7 @@ function UserScreen() {
           <input
           name="role"
             type="text"
-            className="form-control"
+            className="form-control w-25"
             id=""
             placeholder="Enter role"
             value={role}
@@ -55,7 +81,7 @@ function UserScreen() {
           <input
             name="address"
             type="text"
-            className="form-control"
+            className="form-control w-25"
             id=""
             placeholder="Enter address"
             value={address}
@@ -67,7 +93,7 @@ function UserScreen() {
           <input
             name="salary"
             type="number"
-            className="form-control"
+            className="form-control w-25"
             id=""
             placeholder="Enter salary"
             value={salary}
@@ -76,7 +102,7 @@ function UserScreen() {
         </div>
         <br></br>
         {
-          <button type="submit" className="btn btn-primary">
+          <button onClick={handleUpdate} className="btn btn-primary">
             Submit
           </button>
         }

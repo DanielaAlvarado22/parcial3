@@ -8,7 +8,7 @@ const useForm = (initialState: any) => {
   }
 
   return [state,
-    handleChange
+    handleChange, SetState
   ];
 };
 
